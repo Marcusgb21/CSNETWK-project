@@ -36,7 +36,7 @@ def main():
             print("/msg <handle> <message>")
             print("/?")
         else:
-            print("Invalid command format. Usage: /join <ip_address> <port>")
+            print("Invalid command format. Usage: /join <ip_address> <port> or /?")
 
     receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
     receive_thread.start()
