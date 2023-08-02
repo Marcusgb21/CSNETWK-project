@@ -27,6 +27,14 @@ def main():
                 break  
             except Exception as e:
                 print(f"Error connecting to the server: {e}")
+        elif parts[0].lower() == "/?":
+            print("Input Syntax commands:")
+            print("/join <server_ip_add> <port>")
+            print("/leave")
+            print("/register <handle>")
+            print("/all <message>")
+            print("/msg <handle> <message>")
+            print("/?")
         else:
             print("Invalid command format. Usage: /join <ip_address> <port>")
 
