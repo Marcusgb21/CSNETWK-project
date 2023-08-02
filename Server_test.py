@@ -50,6 +50,7 @@ def handle_command(command, client_socket):
             client_socket.sendall("Connection closed. Thank you!\n".encode('utf-8'))
             client_socket.close()
         elif parts[0] == "/msg":
+            
             if len(parts) >= 3:
                 to_username = parts[1]
                 message = ' '.join(parts[2:])
