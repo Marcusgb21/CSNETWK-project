@@ -59,6 +59,14 @@ def handle_command(command, client_socket):
         else:
             client_socket.sendall("Usage: /msg <username> <message>\n".encode('utf-8'))
             # Add a new command to handle broadcasting
+    elif parts[0] == "/?":
+            print("Input Syntax commands:")
+            print("/join <server_ip_add> <port>")
+            print("/leave")
+            print("/register <handle>")
+            print("/all <message>")
+            print("/msg <handle> <message>")
+            print("/?")
     elif parts[0] == "/all":
         if len(parts) >= 2:
             # Broadcast the message to all connected clients
