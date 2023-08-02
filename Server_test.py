@@ -30,44 +30,50 @@ def handle_client(client_socket, addr):
 def handle_command(command, client_socket):
     # Split command into parts
     parts = command.strip().split()
-    if len(parts) == 0 | len(parts) == 1:
+    if not parts:
         return
 
-    # Parse command
-    if parts[0] == "/register":
-        if len(parts) >= 2:
-            username = parts[1]
-            with client_lock:
-                clients[client_socket] = username
-            client_socket.sendall(f"Welcome {username}!\n".encode('utf-8'))
-        else:
-            client_socket.sendall("Paramaters do not match, the format is: /register <username>\n".encode('utf-8'))
-    elif parts[0] == "/leave":
-        client_socket.sendall("Connection closed. Thank you!\n".encode('utf-8'))
-        client_socket.close()
-    elif parts[0] == "/msg":
-        if len(parts) >= 3:
-            to_username = parts[1]
-            message = ' '.join(parts[2:])
-            with client_lock:
-                for client, username in clients.items():
-                    if username == to_username:
-                        client.sendall(f"[From {clients[client_socket]}]: {message}\n".encode('utf-8'))
-                        break
+    if parts[0].startswith("/"):
+        # Parse command
+        if parts[0] == "/register":
+            if len(parts) >= 2:
+                username = parts[1]
+                with client_lock:
+                    if any(username == value for value in clients.values()):
+                        client_socket.sendall("Error: Handle or alias already exists\n".encode('utf-8'))
                     else:
-                        client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8')) 
+                        clients[client_socket] = username
+                        client_socket.sendall(f"Welcome {username}!\n".encode('utf-8'))
+            else:
+                client_socket.sendall("Paramaters do not match, the format is: /register <username>\n".encode('utf-8'))
+        elif parts[0] == "/leave":
+            client_socket.sendall("Connection closed. Thank you!\n".encode('utf-8'))
+            client_socket.close()
+        elif parts[0] == "/msg":
+            if len(parts) >= 3:
+                to_username = parts[1]
+                message = ' '.join(parts[2:])
+                with client_lock:
+                    for client, username in clients.items():
+                        if username == to_username:
+                            client.sendall(f"[From {clients[client_socket]}]: {message}\n".encode('utf-8'))
+                            break
+                    else:
+                        client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8'))
+            else:
+                client_socket.sendall("Paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
+        elif parts[0] == "/all":
+            if len(parts) >= 2:
+                # Broadcast the message to all connected clients
+                message = ' '.join(parts[1:])
+                with client_lock:
+                    for client in clients.keys():
+                        client.sendall(f"{clients[client_socket]}: {message}\n".encode('utf-8'))
+            else:
+                client_socket.sendall("Paramaters do not match, the format is: /all <message>\n".encode('utf-8'))
         else:
-            client_socket.sendall("Paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
-            # Add a new command to handle broadcasting
-    elif parts[0] == "/all":
-        if len(parts) >= 2:
-            # Broadcast the message to all connected clients
-            message = ' '.join(parts[1:])
-            with client_lock:
-                for client in clients.keys():
-                    client.sendall(f"{clients[client_socket]}: {message}\n".encode('utf-8'))
-        else:
-            client_socket.sendall("Paramaters do not match, the format is: /all <message>\n".encode('utf-8'))
+            # Invalid command
+            client_socket.sendall("Command syntax doesn't exist\n".encode('utf-8'))
     else:
         # Broadcast the message to all connected clients
         with client_lock:
