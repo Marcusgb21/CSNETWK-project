@@ -30,7 +30,7 @@ def handle_client(client_socket, addr):
 def handle_command(command, client_socket):
     # Split command into parts
     parts = command.strip().split()
-    if len(parts) == 0:
+    if len(parts) == 0 | len(parts) == 1:
         return
 
     # Parse command
@@ -41,7 +41,7 @@ def handle_command(command, client_socket):
                 clients[client_socket] = username
             client_socket.sendall(f"Welcome {username}!\n".encode('utf-8'))
         else:
-            client_socket.sendall("Usage: /register <username>\n".encode('utf-8'))
+            client_socket.sendall("Paramaters do not match, the format is: /register <username>\n".encode('utf-8'))
     elif parts[0] == "/leave":
         client_socket.sendall("Connection closed. Thank you!\n".encode('utf-8'))
         client_socket.close()
@@ -55,9 +55,9 @@ def handle_command(command, client_socket):
                         client.sendall(f"[From {clients[client_socket]}]: {message}\n".encode('utf-8'))
                         break
                     else:
-                        client_socket.sendall(f"User {to_username} not found\n".encode('utf-8'))
+                        client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8')) 
         else:
-            client_socket.sendall("Usage: /msg <username> <message>\n".encode('utf-8'))
+            client_socket.sendall("Paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
             # Add a new command to handle broadcasting
     elif parts[0] == "/all":
         if len(parts) >= 2:
@@ -67,7 +67,7 @@ def handle_command(command, client_socket):
                 for client in clients.keys():
                     client.sendall(f"{clients[client_socket]}: {message}\n".encode('utf-8'))
         else:
-            client_socket.sendall("Usage: /all <message>\n".encode('utf-8'))
+            client_socket.sendall("Paramaters do not match, the format is: /all <message>\n".encode('utf-8'))
     else:
         # Broadcast the message to all connected clients
         with client_lock:
