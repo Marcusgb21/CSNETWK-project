@@ -1,6 +1,7 @@
 import socket
 import threading
 
+
 BUFFER_SIZE = 1024
 
 def receive_messages(client_socket):
@@ -16,6 +17,7 @@ def main():
     while True:
         command = input()
         parts = command.strip().split()
+                
 
         if len(parts) == 3 and parts[0].lower() == "/join":
             ip_address = parts[1]
@@ -26,7 +28,7 @@ def main():
                 print("Connected to the server.")
                 break  
             except Exception as e:
-                print(f"Error connecting to the server: {e}")
+                print(f"Error: Connection to the Message Board Server has failed! Please check IP Address and Port Number {e}")               
         elif parts[0].lower() == "/?":
             print("Input Syntax commands:")
             print("/join <server_ip_add> <port>")
@@ -35,9 +37,11 @@ def main():
             print("/all <message>")
             print("/msg <handle> <message>")
             print("/?")
+        elif parts[0].lower() == "/leave":
+            print("Error: Disconnection failed. Please connect to the server first")
         else:
             print("Invalid command format. Usage: /join <ip_address> <port> or /?")
-
+            
     receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
     receive_thread.start()
 
@@ -50,6 +54,14 @@ def main():
             client_socket.sendall(message.encode('utf-8'))
             if message == "/leave":
                 break
+            elif message == "/?": 
+                print("Input Syntax commands:")
+                print("/join <server_ip_add> <port>")
+                print("/leave")
+                print("/register <handle>")
+                print("/all <message>")
+                print("/msg <handle> <message>")
+                print("/?")
     except KeyboardInterrupt:
         pass
 
