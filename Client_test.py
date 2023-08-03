@@ -49,8 +49,8 @@ def main():
     receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
     receive_thread.start()
 
-    receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
-    receive_thread.start()
+    #receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
+    #receive_thread.start()
 
     try:
         while True:
