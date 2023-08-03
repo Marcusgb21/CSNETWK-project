@@ -44,7 +44,7 @@ def main():
             print("Disconnecting...")
             client_socket.close()
         else:
-            print("Invalid command format. Usage: /join <ip_address> <port> or /?")
+            print("Command parameters do not match or is not allowed. Usage: /join <ip_address> <port> or /?")
             
     receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
     receive_thread.start()
@@ -92,7 +92,7 @@ def main():
                     elif parts[0].lower() == "/leave":
                         print("Error: Disconnection failed. Please connect to the server first")
                     else:
-                        print("Invalid command format. Usage: /join <ip_address> <port> or /?")                        
+                        print("Command parameters do not match or is not allowed. Usage: /join <ip_address> <port> or /?")                        
                 receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
                 receive_thread.start()
 
