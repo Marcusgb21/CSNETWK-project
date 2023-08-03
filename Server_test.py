@@ -38,9 +38,9 @@ def handle_command(command, client_socket):
         # Parse command      
         if parts[0] == "/join":
             if len(parts) == 3:
-                client_socket.sendall("You have already joined a server, leave to join a new one\n".encode('utf-8'))
+                client_socket.sendall("Error: You have already joined a server, leave to join a new one\n".encode('utf-8'))
             else:
-                client_socket.sendall("Paramaters do not match, the format is: /join <IP address> <port>\n".encode('utf-8'))     
+                client_socket.sendall("Error: Paramaters do not match, the format is: /join <IP address> <port>\n".encode('utf-8'))     
         if parts[0] == "/register":
             if len(parts) == 2:
                 username = parts[1]
@@ -51,7 +51,7 @@ def handle_command(command, client_socket):
                         clients[client_socket] = username
                         client_socket.sendall(f"Welcome {username}!\n".encode('utf-8'))
             else:
-                client_socket.sendall("Paramaters do not match, the format is: /register <username>\n".encode('utf-8'))
+                client_socket.sendall("Error: Paramaters do not match, the format is: /register <username>\n".encode('utf-8'))
         elif parts[0] == "/msg":
             if len(parts) >= 3:
                 to_username = parts[1]
@@ -64,7 +64,7 @@ def handle_command(command, client_socket):
                     else:
                         client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8'))
             else:
-                client_socket.sendall("Paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
+                client_socket.sendall("Error: Paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
         elif parts[0] == "/all":
             if len(parts) >= 2:
                 # Broadcast the message to all connected clients
@@ -81,7 +81,7 @@ def handle_command(command, client_socket):
         elif parts[0] == "/quit":
             return
         else:
-                client_socket.sendall("Command syntax doesn't exist\n".encode('utf-8'))
+                client_socket.sendall("Error: Command syntax doesn't exist\n".encode('utf-8'))
     else:
         with client_lock:
             username = clients.get(client_socket, "Unknown User")
