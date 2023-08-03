@@ -24,8 +24,10 @@ def handle_client(client_socket, addr):
 
     with client_lock:
         if client_socket in clients:
+            username = clients[client_socket]
             del clients[client_socket]
             client_socket.close()
+            print(f"Client {username} disconnected.")
 
 def handle_command(command, client_socket):
     # Split command into parts
