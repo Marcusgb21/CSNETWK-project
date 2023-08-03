@@ -37,7 +37,7 @@ def handle_command(command, client_socket):
     if parts[0].startswith("/"):
         # Parse command      
         if parts[0] == "/join":
-            if len(parts) == 3:
+            if len(parts) != 3:
                 client_socket.sendall("Error: You have already joined a server, leave to join a new one\n".encode('utf-8'))
             else:
                 client_socket.sendall("Error: Command paramaters do not match, the format is: /join <IP address> <port>\n".encode('utf-8'))     
@@ -65,7 +65,7 @@ def handle_command(command, client_socket):
                         client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8'))
             else:
                 client_socket.sendall("Error: Command paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
-        elif parts[0] == "/all"
+        elif parts[0] == "/all":
             if len(parts) >= 2: #Add statement checking if someone is registered
                 # Broadcast the message to all connected clients
                 message = ' '.join(parts[1:])
