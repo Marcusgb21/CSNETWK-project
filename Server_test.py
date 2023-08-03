@@ -65,8 +65,8 @@ def handle_command(command, client_socket):
                         client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8'))
             else:
                 client_socket.sendall("Error: Command paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
-        elif parts[0] == "/all":
-            if len(parts) >= 2:
+        elif parts[0] == "/all"
+            if len(parts) >= 2 and #Check if the user is registered:
                 # Broadcast the message to all connected clients
                 message = ' '.join(parts[1:])
                 with client_lock:
