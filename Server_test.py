@@ -63,6 +63,7 @@ def handle_command(command, client_socket):
                             break
                     else:
                         client_socket.sendall(f"Error: Handle or alias not found\n".encode('utf-8'))
+                        continue
             else:
                 client_socket.sendall("Error: Command paramaters do not match, the format is: /msg <username> <message>\n".encode('utf-8'))
         elif parts[0] == "/all":
