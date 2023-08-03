@@ -44,7 +44,7 @@ def main():
             print("Disconnecting...")
             client_socket.close()
         else:
-            print("Error: Command parameters do not match or is not allowed. Usage: /join <ip_address> <port> or /?")
+            print("Error: Command parameters do not match or is not allowed. Usage: /join <ip_address> <port> or /?\n")
             
     receive_thread = threading.Thread(target=receive_messages, args=(client_socket,))
     receive_thread.start()
