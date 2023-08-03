@@ -37,7 +37,7 @@ def main():
             print("/register <handle>")
             print("/all <message>")
             print("/msg <handle> <message>")
-            print("/?\n")
+            print("/?\n\n")
         elif parts[0].lower() == "/leave":
             print("Error: Disconnection failed. Please connect to the server first")
         elif parts[0].lower() =="/quit":
@@ -66,7 +66,7 @@ def main():
                 print("/register <handle>")
                 print("/all <message>")
                 print("/msg <handle> <message>")
-                print("/?\n")
+                print("/?\n\n")
             elif message == "/leave": 
                 while True:
                     command = input()
@@ -88,7 +88,7 @@ def main():
                         print("/register <handle>")
                         print("/all <message>")
                         print("/msg <handle> <message>")
-                        print("/?\n")
+                        print("/?\n\n")
                     elif parts[0].lower() == "/leave":
                         print("Error: Disconnection failed. Please connect to the server first")
                     else:
