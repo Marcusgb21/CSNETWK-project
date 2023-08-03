@@ -73,11 +73,11 @@ def handle_command(command, client_socket):
                     for client in clients.keys():
                         client.sendall(f"{clients[client_socket]}: {message}\n".encode('utf-8'))
             else:
-                client_socket.sendall("Paramaters do not match, the format is: /all <message>\n".encode('utf-8'))
+                client_socket.sendall("Error: Command parameters do not match or is not allowed. The format is: /all <message>\n".encode('utf-8'))
         elif parts[0] == "/?":
             return
         elif parts[0] == "/leave":
-            client_socket.sendall("Command parameters do not match or is not allowed.\n".encode('utf-8'))
+            client_socket.sendall("Error: Command parameters do not match or is not allowed.\n".encode('utf-8'))
         elif parts[0] == "/quit":
             return
         else:
