@@ -41,7 +41,7 @@ def handle_command(command, client_socket):
                 client_socket.sendall("Error: You have already joined a server, leave to join a new one\n".encode('utf-8'))
             else:
                 client_socket.sendall("Error: Command paramaters do not match, the format is: /join <IP address> <port>\n".encode('utf-8'))     
-        if parts[0] == "/register":
+        elif parts[0] == "/register":
             if len(parts) == 2:
                 username = parts[1]
                 with client_lock:
