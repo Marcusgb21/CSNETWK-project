@@ -77,7 +77,7 @@ def handle_command(command, client_socket):
         elif parts[0] == "/?":
             return
         elif parts[0] == "/leave":
-            client_socket.sendall("Leaving server...See you!\n".encode('utf-8'))
+            client_socket.sendall("Command parameters do not match or is not allowed.\n".encode('utf-8'))
         elif parts[0] == "/quit":
             return
         else:
