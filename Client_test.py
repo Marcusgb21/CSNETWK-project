@@ -25,7 +25,7 @@ def main():
             try:
                 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 client_socket.connect((ip_address, port))
-                print("Connected to the server.")
+                print("Connected to the server.\n")
                 break  
             except Exception as e:
                 print(f"Error: Connection to the Message Board Server has failed! Please check IP Address and Port Number {e}")               
@@ -37,7 +37,7 @@ def main():
             print("/register <handle>")
             print("/all <message>")
             print("/msg <handle> <message>")
-            print("/?")
+            print("/?\n")
         elif parts[0].lower() == "/leave":
             print("Error: Disconnection failed. Please connect to the server first")
         elif parts[0].lower() =="/quit":
